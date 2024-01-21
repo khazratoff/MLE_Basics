@@ -23,7 +23,12 @@ from sklearn.model_selection import train_test_split
 warnings.filterwarnings("ignore",) 
 
 #Configuring logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+#Comment this line if you training on local environment
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s',filename='/app/build.log',)
+
+#Comment this line if you training on Docker environment
+# logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 logging.info("Starting...\U0001f600")
 
 #Defining ROOT directory, and appending it to the sys.path
@@ -109,19 +114,12 @@ def save_trained_model():
     #Training the model
     model = trainNN(X_train,X_test,y_train,y_test)
 
-    #Saving current model
-    logging.info("Saving the model...")
-    model_name = input("Name the model for future reuse: ")
-
-    #Ensuring given name not already exists to avoid duplication
-    while os.path.exists(os.path.join(MODEL_PATH,model_name+'.h5')) or model_name=="":
-        print("Name is rejected maybe it already exists!")
-        model_name = input("Rename the model for future reuse: ")
-
     #Saving the model to the models folder
+    logging.info("Saving the model...")
+    model_name = os.environ.get("MODEL_NAME", "final_nn_model.h5")
     if not os.path.exists(MODEL_PATH):
         os.makedirs(MODEL_PATH)
-    latest_model_path = os.path.join(MODEL_PATH,model_name+".h5")
+    latest_model_path = os.path.join(MODEL_PATH,model_name)
     model.save(latest_model_path)
     logging.info(f'"{model_name}" saved successfully! \N{grinning face}')
 
