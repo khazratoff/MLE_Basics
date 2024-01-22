@@ -20,5 +20,5 @@ COPY ../utils.py /app
 COPY ../requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Train the model
-RUN python3 training/train.py
+# Trains the model after running instance of this image
+CMD ["python3","training/train.py"]

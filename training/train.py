@@ -20,15 +20,10 @@ from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 
 #Configuring warnings
-warnings.filterwarnings("ignore",) 
+warnings.filterwarnings("ignore") 
 
 #Configuring logging
-#Comment this line if you training on local environment
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s',filename='/app/build.log',)
-
-#Comment this line if you training on Docker environment
-# logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logging.info("Starting...\U0001f600")
 
 #Defining ROOT directory, and appending it to the sys.path
@@ -83,7 +78,7 @@ def prepare_data(train_data,test_data,y_train,y_test) -> tuple:
 
 def trainNN(X_train,X_test,y_train,y_test) -> object:
     '''Trains Deep Neural Network model on train data and evaluates it on the test data'''
-
+    logging.info("Preparing data...")
     logging.info("Training the model...")
 
     X_train,X_test,y_train,y_test = prepare_data(X_train,X_test,y_train,y_test)
