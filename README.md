@@ -51,4 +51,6 @@ Once a model has been trained, it can be used to make predictions on new data in
 docker run -v $(pwd)/results:/app/results inference_image
 ```
 Make sure you don't get any errors related to your pathname (pwd). After succesfull run, inference phase can be shown in shell, and what's more important here is that `/results` folder in container will be mounted on your local `/results` folder which keeps result of the models prediction (csv file)  on inference data.
+## What's more
+- Some tests and exceptions are included in some problematic parts in the code.<br> *Looking forward to get your feedback, and if you don't get any desired results please let me know.*
 
