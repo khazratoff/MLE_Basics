@@ -38,7 +38,17 @@ docker run -v $(pwd)/models:/app/models -v $(pwd)/data:/app/data training_image
 ```
 If you get an error, probably it is because there are some whitespaces in your printed working directory(pwd).
 To handle this instead of using `pwd` write your project path by hand like:`/Users/john/desktop/MLE_Basics`.
-In the shell (terminal, powershell) you can the `logging.info` created by the script along with model's `accuracy` score.
-Make sure that train and inference data created in `/data` folder along with model in `/models` folder.
+In the shell (terminal, powershell) you can see the training phase with `logging.info` created by the script along with model's `accuracy` score.
+Make sure that `train_data.csv` and `inference_data.csv` created in `/data` folder along with your model in `/models` folder.
 ## Inference
+Once a model has been trained, it can be used to make predictions on new data in the inference stage. The inference stage is implemented in inference/run.py.
+- Build the inference Docker image:
+```bash
+  docker build -f ./inference/Dockerfile -t inference_image .
+```
+- Run the inference Docker container with following command:
+``` bash
+docker run -v $(pwd)/results:/app/results inference_image
+```
+Make sure you don't get any errors related to your pathname (pwd). After succesfull run, inference phase can be shown in shell, and what's more important here is that `/results` folder in container will be mounted on your local `/results` folder which keeps result of the models prediction (csv file)  on inference data.
 
